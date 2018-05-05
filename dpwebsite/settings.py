@@ -36,8 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-                  
+    'django.contrib.staticfiles',                 
     'dpwebsite.core',
 
 ]
@@ -79,7 +78,11 @@ WSGI_APPLICATION = 'dpwebsite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        # Add the AWS stuff here
+        'NAME': 'capstonedb',
+        'USER': 'dbadmin',
+        'PASSWORD': 'capStone13!#',
+        'HOST': 'http://csc394capstone.cukpuaob1cjr.us-east-2.rds.amazonaws.com/',
+        'PORT': '3306',
     }
 }
 
