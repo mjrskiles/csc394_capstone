@@ -2,11 +2,27 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+
+#account app
+#redirect into account page after login
 
 
 @login_required
-def home(request):
-    return render(request, 'home.html')
+    #def home(request):
+#return render(request, 'home.html')
+
+#
+def login_success(request):
+    """
+        Redirects users based on whether they are in the admins group
+        """
+    if request.user.groups.filter(name="admin").exists():
+        # user is an admin
+        return redirect("admin")
+    else:
+        return redirect("home")
+
 
 
 def signup(request):

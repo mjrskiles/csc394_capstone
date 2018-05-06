@@ -9,7 +9,7 @@
             <h1>Depaul University Degree Path Login</h1>
             {% if user.is_authenticated %}
             Hi {{ user.username }}!
-            <a href="{% url 'logout' %}">logout</a>
+            <a href="{% url 'logout' %}">logout</a> / <a href="{% url 'profile' %}">profile</a> / <a href="{% url 'schedule' %}">schedule</a> / <a href="{% url 'report' %}">report</a>
             {% else %}
             <a href="{% url 'login' %}">login</a> / <a href="{% url 'signup' %}">signup</a>
             {% endif %}

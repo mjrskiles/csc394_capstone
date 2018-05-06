@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
                   
     'dpwebsite.core',
+                  #'dpwebsite.aup',
 
 ]
 
@@ -76,12 +77,16 @@ WSGI_APPLICATION = 'dpwebsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# Database
+# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
 }
+}
+
 
 
 # Password validation
@@ -121,6 +126,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+BASE_URL = 'base'
+USERPAGE_URL = 'userpage'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
+PROFILE_URL = 'profile'
+SCHEDULE_URL = 'schedule'
+REPORT_URL = 'report'
+
+LOGIN_REDIRECT_URL = 'userpage'
