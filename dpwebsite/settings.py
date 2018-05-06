@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',                 
     'dpwebsite.core',
+                  #'dpwebsite.aup',
 
 ]
 
@@ -75,8 +76,15 @@ WSGI_APPLICATION = 'dpwebsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# Database
+# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+
 DATABASES = {
     'default': {
+<<<<<<< HEAD
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+=======
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'dbadmin',
         'PASSWORD': 'capStone13!#',
@@ -87,7 +95,10 @@ DATABASES = {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
     }
+>>>>>>> 91bd66794162cd94c440cce5fff19e47ecec6c62
 }
+}
+
 
 
 # Password validation
@@ -127,6 +138,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+BASE_URL = 'base'
+USERPAGE_URL = 'userpage'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
+PROFILE_URL = 'profile'
+SCHEDULE_URL = 'schedule'
+REPORT_URL = 'report'
+
+LOGIN_REDIRECT_URL = 'userpage'
