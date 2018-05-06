@@ -5,11 +5,13 @@
 ### Required software
 
 MySQL Server
+
 Python3
 
 ### Required python modules
 
 django
+
 mysqlclient
 
 ### Things that you might need to do
