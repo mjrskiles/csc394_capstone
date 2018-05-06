@@ -78,11 +78,14 @@ WSGI_APPLICATION = 'dpwebsite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'capstonedb',
         'USER': 'dbadmin',
         'PASSWORD': 'capStone13!#',
-        'HOST': 'csc394capstone.cukpuaob1cjr.us-east-2.rds.amazonaws.com',
+        'HOST': 'capstonemysql.cukpuaob1cjr.us-east-2.rds.amazonaws.com',
         'PORT': '3306',
+        'NAME': 'capstone',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
