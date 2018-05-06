@@ -77,12 +77,15 @@ WSGI_APPLICATION = 'dpwebsite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'CSORACLE',
+        'ENGINE': 'django.db.backends.mysql',
         'USER': 'dbadmin',
         'PASSWORD': 'capStone13!#',
-        'HOST': 'capstoneoracledb.cukpuaob1cjr.us-east-2.rds.amazonaws.com',
-        'PORT': '1521',
+        'HOST': 'capstonemysql.cukpuaob1cjr.us-east-2.rds.amazonaws.com',
+        'PORT': '3306',
+        'NAME': 'capstone',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
