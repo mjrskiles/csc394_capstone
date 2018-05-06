@@ -5,26 +5,13 @@ from django.db import models
 
 # Create your models here.
 
-class Users(models.Model):
-    USER_ID = models.CharField(max_length=50)
-    USER_Name = models.CharField(max_length=50)
-    USER_Password = models.CharField(max_length=50)
-    USER_Email = models.CharField(max_length=50)
-    USER_Address = models.CharField(max_length=100)
-    USER_City = models.CharField(max_length=30)
-    USER_Zip = models.IntegerField()
-    USER_State = models.CharField(max_length=2)
-    USER_FirstName = models.CharField(max_length=50)
-    USER_LastName = models.CharField(max_length=50)
-    USER_Degree = models.CharField(max_length=25)
-
-
 class Courses(models.Model):
-    CRSE_ID = models.CharField(max_length=15)
+    CRSE_ID = models.IntegerField(max_length=15)
     CRSE_TITLE = models.CharField(max_length=25)
-    DESCRIPTION = models.CharField(max_length=250)
+    CRSE_DESCRIPTION = models.CharField(max_length=250)
     CRSE_SUBJECT = models.CharField(max_length=50)
-    PREREQUISITE = models.CharField(max_length=250)
+    CRSE_PREREQUISITE = models.CharField(max_length=250)
+    CRSE_NBR = models.CharField(max_length=3)
 
 
 class PreRequisites(models.Model):
