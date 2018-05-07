@@ -60,6 +60,12 @@ It's a good idea to pull often and use branches when working with git.
   - After you pull and fix any errors, that's when you make changes to the code.
   - After you make some changes, and everything seems to be working:
     - `$ git commit -a -m "You type a commit message here explaining what you did"`
+      - The -a flag means "all". Commits changes to all modified files.
+      - The -m flag means "message". If you leave out the -m git will open a text editor (probably vi) and ask you to type a message.
+        - Side note: If you do find yourself in vi, you can quit by typing `:q` and hitting enter.
+          - To start typing in vi press `i`
+          - To navigate press esc and use hjkl keys to move the cursor
+          - When you're done typing your commit message, save and quit with esc, then `:wq`
     - `$ git pull`
       - Fix merge errors if there are any
       - The reason you pull right now is so that you don't push errors up to the github repo.
@@ -81,9 +87,9 @@ By creating a new branch and making/testing changes there first, you can
 To make a new branch
 
 `$ git checkout -b <name>`
-  - git checkout switches to a branch called <name>
+  - git checkout switches to a branch called `name`
   - the -b flag creates a new branch if it doesn't exist
-  - git checkout -b combined creates a new branch called <name> and switches to it
+  - git checkout -b combined creates a new branch called `name` and switches to it
 
 To switch between branches
 
@@ -97,7 +103,7 @@ switches to the master branch.
 
 Once you're ready to add your changes back into the master branch.
 
-(Assuming you're on your branch that you made changes on named <dev_branch>)
+(Assuming you're on your branch that you made changes on named `dev_branch`)
 
 - `$ git merge master`
   - This command compares the master branch the one you're on and tries to merge them.
@@ -107,6 +113,6 @@ Once you're ready to add your changes back into the master branch.
   making breaking changes to the master branch
 - `$ git checkout master`
   - This switches back to the master branch
-- `$ git merge <dev_branch>`
+- `$ git merge dev_branch`
   - Since you already fixed the merge errors on the dev branch this should work fine.
 - `$ git push`
