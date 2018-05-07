@@ -100,17 +100,13 @@ Once you're ready to add your changes back into the master branch.
 (Assuming you're on your branch that you made changes on named <dev_branch>)
 
 - `$ git merge master`
-
   - This command compares the master branch the one you're on and tries to merge them.
   most of the time this works fine. Sometimes git can't merge them automatically and you need to 
   fix the errors as mentioned above.
   - The reason you merge the master _into_ your development branch is because you should always avoid
   making breaking changes to the master branch
-
 - `$ git checkout master`
   - This switches back to the master branch
-
 - `$ git merge <dev_branch>`
   - Since you already fixed the merge errors on the dev branch this should work fine.
-
 - `$ git push`
