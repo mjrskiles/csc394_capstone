@@ -81,10 +81,6 @@ WSGI_APPLICATION = 'dpwebsite.wsgi.application'
 
 DATABASES = {
     'default': {
-<<<<<<< HEAD
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-=======
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'dbadmin',
         'PASSWORD': 'capStone13!#',
@@ -95,9 +91,8 @@ DATABASES = {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
     }
->>>>>>> 91bd66794162cd94c440cce5fff19e47ecec6c62
 }
-}
+
 
 
 
