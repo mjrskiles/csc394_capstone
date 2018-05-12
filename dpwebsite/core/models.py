@@ -54,5 +54,5 @@ class Path(models.Model):
 
 class Availability(models.Model):
     CRSE_ID = models.ForeignKey(Courses, related_name='avail_CRSE_ID', on_delete=models.CASCADE)
-    availQuarter = models.IntegerField()
-    availDelivery = models.IntegerField()
+    availQuarter = models.CharField(max_length=10)
+    availDelivery = models.CharField(max_length=10)
