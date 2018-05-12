@@ -17,7 +17,6 @@ from django.dispatch import receiver
 ##############################
 
 class Users(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     userID = models.CharField(max_length=50)
     userName = models.CharField(max_length=50)
     userPassword = models.CharField(max_length=50)
@@ -33,7 +32,7 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 
 class Courses(models.Model):
-    CRSE_ID = models.IntegerField(max_length=15)
+    CRSE_ID = models.IntegerField()
     CRSE_TITLE = models.CharField(max_length=25)
     CRSE_DESCRIPTION = models.CharField(max_length=250)
     CRSE_SUBJECT = models.CharField(max_length=50)
@@ -54,6 +53,6 @@ class Path(models.Model):
 
 
 class Availability(models.Model):
-    CRSE_ID = models.ForeignKey(Courses, related_name='avail_courseID', on_delete=models.CASCADE)
+    CRSE_ID = models.ForeignKey(Courses, related_name='avail_CRSE_ID', on_delete=models.CASCADE)
     availQuarter = models.IntegerField()
     availDelivery = models.IntegerField()
