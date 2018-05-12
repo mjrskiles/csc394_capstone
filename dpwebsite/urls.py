@@ -30,6 +30,6 @@ urlpatterns = [
                url(r'^schedule/$',auth_views.logout,{'template_name': 'schedule.html'}, name='schedule'),
                url(r'^report/$',auth_views.logout,{'template_name': 'report.html'}, name='report'),
                url(r'^signup/$', core_views.signup, name='signup'),
-               url(r'^login_success/$', core_views.login_success, name='login_success'),
+#               url(r'^login_success/$', core_views.login_success, name='login_success'),
                url(r'^admin/', admin.site.urls),
 ]

@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 from django.db import models
 
-
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -16,11 +15,11 @@ from django.dispatch import receiver
 #    instance.profile.save()
 ##############################
 
-class Users(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    userID = models.CharField(max_length=50)
-    userName = models.CharField(max_length=50)
-    userPassword = models.CharField(max_length=50)
+    #userID = models.CharField(max_length=50)
+    #userName = models.CharField(max_length=50)
+    #userPassword = models.CharField(max_length=50)
     userEmail = models.CharField(max_length=50)
     userFirstName = models.CharField(max_length=50)
     userLastName = models.CharField(max_length=50)
@@ -30,6 +29,17 @@ def update_user_profile(sender, instance, created, **kwargs):
     if created:
         Users.objects.create(user=instance)
     instance.profile.save()
+
+
+class Users(models.Model):
+    
+    userID = models.CharField(max_length=50)
+    userName = models.CharField(max_length=50)
+    userPassword = models.CharField(max_length=50)
+    userEmail = models.CharField(max_length=50)
+    userFirstName = models.CharField(max_length=50)
+    userLastName = models.CharField(max_length=50)
+
 
 
 class Courses(models.Model):

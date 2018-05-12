@@ -3,15 +3,34 @@
 from django.db import migrations, models
 import django.db.models.deletion
 
+from django.conf import settings
+
+
 
 class Migration(migrations.Migration):
 
     initial = True
 
     dependencies = [
+    migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
+        migrations.CreateModel(
+            name='Profile',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+#                ('userID', models.CharField(max_length=50)),
+#                ('userName', models.CharField(max_length=50)),
+#                ('userPassword', models.CharField(max_length=50)),
+                ('userEmail', models.CharField(max_length=50)),
+                ('userFirstName', models.CharField(max_length=50)),
+                ('userLastName', models.CharField(max_length=50)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+
+            ],
+        ),
+                
         migrations.CreateModel(
             name='Availability',
             fields=[
@@ -56,14 +75,9 @@ class Migration(migrations.Migration):
                 ('userName', models.CharField(max_length=50)),
                 ('userPassword', models.CharField(max_length=50)),
                 ('userEmail', models.CharField(max_length=50)),
-                ('userAddress', models.CharField(max_length=100)),
-                ('userCity', models.CharField(max_length=30)),
-                ('userZip', models.IntegerField()),
-                ('userState', models.CharField(max_length=2)),
                 ('userFirstName', models.CharField(max_length=50)),
                 ('userLastName', models.CharField(max_length=50)),
-                ('userDegree', models.CharField(max_length=25)),
-                ('userDesiredClasses', models.IntegerField()),
+
             ],
         ),
         migrations.AddField(
