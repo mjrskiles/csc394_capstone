@@ -24,8 +24,6 @@ class Users(models.Model):
     userEmail = models.CharField(max_length=50)
     userFirstName = models.CharField(max_length=50)
     userLastName = models.CharField(max_length=50)
-    userDegree = models.CharField(max_length=25)
-    userDesiredClasses = models.IntegerField()
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
@@ -35,26 +33,27 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 
 class Courses(models.Model):
-    courseID = models.CharField(max_length=15)
-    courseTitle = models.CharField(max_length=25)
-    courseDescription = models.CharField(max_length=250)
-    courseSubject = models.CharField(max_length=50)
-    courseLevel = models.IntegerField()
+    CRSE_ID = models.IntegerField(max_length=15)
+    CRSE_TITLE = models.CharField(max_length=25)
+    CRSE_DESCRIPTION = models.CharField(max_length=250)
+    CRSE_SUBJECT = models.CharField(max_length=50)
+    CRSE_PREREQUISITE = models.CharField(max_length=250)
+    CRSE_NBR = models.CharField(max_length=3)
 
 
 class PreRequisites(models.Model):
-    preReqID = models.ForeignKey(Courses, related_name='prereq_id', on_delete=models.CASCADE)
-    courseID = models.ForeignKey(Courses, related_name='prereq_course_id', on_delete=models.CASCADE)
+    PREREQUISITE_ID = models.ForeignKey(Courses, related_name='prereq_id', on_delete=models.CASCADE)
+    CRSE_ID = models.ForeignKey(Courses, related_name='prereq_course_id', on_delete=models.CASCADE)
 
 
 class Path(models.Model):
-    userID = models.ForeignKey(Users, related_name='path_userID', on_delete=models.CASCADE)
+    USER_ID = models.ForeignKey(Users, related_name='path_userID', on_delete=models.CASCADE)
     courseID = models.ForeignKey(Courses, related_name='path_courseID', on_delete=models.CASCADE)
     pathQuarter = models.IntegerField()
     pathSteps = models.IntegerField()
 
 
 class Availability(models.Model):
-    courseID = models.ForeignKey(Courses, related_name='avail_courseID', on_delete=models.CASCADE)
+    CRSE_ID = models.ForeignKey(Courses, related_name='avail_courseID', on_delete=models.CASCADE)
     availQuarter = models.IntegerField()
     availDelivery = models.IntegerField()
