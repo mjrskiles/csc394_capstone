@@ -92,7 +92,6 @@ DATABASES = {
         },
     }
 }
-}
 
 
 
@@ -141,4 +140,4 @@ PROFILE_URL = 'profile'
 SCHEDULE_URL = 'schedule'
 REPORT_URL = 'report'
 
-LOGIN_REDIRECT_URL = 'userpage'
+LOGIN_REDIRECT_URL = 'home'
