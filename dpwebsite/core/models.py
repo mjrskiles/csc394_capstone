@@ -15,11 +15,13 @@ from django.dispatch import receiver
 #    instance.profile.save()
 ##############################
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     #userID = models.CharField(max_length=50)
     #userName = models.CharField(max_length=50)
     #userPassword = models.CharField(max_length=50)
+
     userEmail = models.CharField(max_length=50)
     userFirstName = models.CharField(max_length=50)
     userLastName = models.CharField(max_length=50)
@@ -43,7 +45,7 @@ class Users(models.Model):
 
 
 class Courses(models.Model):
-    CRSE_ID = models.IntegerField(max_length=15)
+    CRSE_ID = models.IntegerField()
     CRSE_TITLE = models.CharField(max_length=25)
     CRSE_DESCRIPTION = models.CharField(max_length=250)
     CRSE_SUBJECT = models.CharField(max_length=50)
@@ -64,6 +66,6 @@ class Path(models.Model):
 
 
 class Availability(models.Model):
-    CRSE_ID = models.ForeignKey(Courses, related_name='avail_courseID', on_delete=models.CASCADE)
-    availQuarter = models.IntegerField()
-    availDelivery = models.IntegerField()
+    CRSE_ID = models.ForeignKey(Courses, related_name='avail_CRSE_ID', on_delete=models.CASCADE)
+    availQuarter = models.CharField(max_length=10)
+    availDelivery = models.CharField(max_length=10)
