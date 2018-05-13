@@ -135,10 +135,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 BASE_URL = 'base'
 USERPAGE_URL = 'userpage'
+#SIGNUP_URL = 'signup'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-PROFILE_URL = 'profile'
+#PROFILE_URL = 'profile'
 SCHEDULE_URL = 'schedule'
 REPORT_URL = 'report'
 
 LOGIN_REDIRECT_URL = 'home'
+

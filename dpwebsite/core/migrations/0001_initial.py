@@ -12,25 +12,25 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-    migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+#    migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='Profile',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-#                ('userID', models.CharField(max_length=50)),
-#                ('userName', models.CharField(max_length=50)),
-#                ('userPassword', models.CharField(max_length=50)),
-                ('userEmail', models.CharField(max_length=50)),
-                ('userFirstName', models.CharField(max_length=50)),
-                ('userLastName', models.CharField(max_length=50)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+#        migrations.CreateModel(
+#            name='Profile',
+#            fields=[
+#                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+##                ('userID', models.CharField(max_length=50)),
+##                ('userName', models.CharField(max_length=50)),
+##                ('userPassword', models.CharField(max_length=50)),
+#                ('userEmail', models.CharField(max_length=50)),
+#                ('userFirstName', models.CharField(max_length=50)),
+#                ('userLastName', models.CharField(max_length=50)),
+#                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+#
+#            ],
+#        ),
 
-            ],
-        ),
-                
         migrations.CreateModel(
             name='Availability',
             fields=[

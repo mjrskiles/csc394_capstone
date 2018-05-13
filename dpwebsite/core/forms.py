@@ -1,18 +1,37 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import (UserCreationForm, UserChangeForm)
 from django.contrib.auth.models import User
 
+from dpwebsite.core.models import Profile
 
-class SignUpForm(UserCreationForm):
-    # userID = forms.CharField(max_length=50)
-    #userName = forms.CharField(max_length=50)
-    #userPassword = forms.CharField(max_length=50)
-    userEmail = forms.EmailField(max_length=50)
-    userFirstName = forms.CharField(max_length=50)
-    userLastName = forms.CharField(max_length=50)
-#    userDegree = forms.CharField(max_length=25)
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
 
     class Meta:
         model = User
-        fields = ('username', 'userFirstName', 'userLastName', 'userEmail','password1', 'password2',)
+        fields = ('username', 'first_name', 'last_name', 'email','password1', 'password2')
+
+    def save(self, commit=True):
+        user = super(RegistrationForm, self).save(commit=True)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+    
+        if commit:
+            user.save()
+        
+        return user
+
+
+class EditProfileForm(UserChangeForm):
+    template_name='/something/else'
+
+
+    class Meta:
+        model = User
+        fields = ('email','first_name','last_name','password')
+
+
+
 

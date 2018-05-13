@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
 
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -18,19 +20,24 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    userEmail = models.CharField(max_length=50)
+
     #userID = models.CharField(max_length=50)
     #userName = models.CharField(max_length=50)
     #userPassword = models.CharField(max_length=50)
 
-    userEmail = models.CharField(max_length=50)
-    userFirstName = models.CharField(max_length=50)
-    userLastName = models.CharField(max_length=50)
+#    courses = models.CharField(max_length=200, default=' ')
+    userFirstName = models.CharField(max_length=50, default='')
+    userLastName = models.CharField(max_length=50, default='')
 
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Users.objects.create(user=instance)
-    instance.profile.save()
+    def __str__(self):
+        return self.user.username
+
+def create_user_profile(sender, **kwargs):
+    if kwargs['created']:
+        create_user_profile = Profile.objects.create(user=kwargs['instance'])
+
+post_save.connect(create_user_profile, sender=User)
 
 
 class Users(models.Model):
@@ -39,8 +46,8 @@ class Users(models.Model):
     userName = models.CharField(max_length=50)
     userPassword = models.CharField(max_length=50)
     userEmail = models.CharField(max_length=50)
-    userFirstName = models.CharField(max_length=50)
-    userLastName = models.CharField(max_length=50)
+#    userFirstName = models.CharField(max_length=50)
+#    userLastName = models.CharField(max_length=50)
 
 
 
