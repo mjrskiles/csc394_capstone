@@ -40,7 +40,7 @@ post_save.connect(create_user_profile, sender=User)
 
 
 class Users(models.Model):
-    
+
     userID = models.CharField(max_length=50)
     userName = models.CharField(max_length=50)
     userPassword = models.CharField(max_length=50)
@@ -52,11 +52,11 @@ class Users(models.Model):
 
 class Courses(models.Model):
     CRSE_ID = models.IntegerField()
-    CRSE_TITLE = models.CharField(max_length=25)
-    CRSE_DESCRIPTION = models.CharField(max_length=250)
+    CRSE_TITLE = models.TextField()
+    CRSE_DESCRIPTION = models.TextField()
     CRSE_SUBJECT = models.CharField(max_length=50)
-    CRSE_PREREQUISITE = models.CharField(max_length=250)
-    CRSE_NBR = models.CharField(max_length=3)
+    CRSE_PREREQUISITE = models.TextField()
+    CRSE_NBR = models.IntegerField()
 
 
 class PreRequisites(models.Model):
