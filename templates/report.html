@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html>
-<body>
-
-<h1>This is heading 1</h1>
-<h2>This is heading 2</h2> 
+{% extends 'base.html' %}
 
 
-</body>
-</html>
+{% block head %}
+<title>Report</title>
+{% endblock %}
 
+{% block body %}
+<div class="container">
+    <h1>Report</h1>
+    <button type="submit">What-if Report</button>
+    <button type="submit">Progress Report</button>
 
+    
+    
+</div>
+
+{% endblock %}
