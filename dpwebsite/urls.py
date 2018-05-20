@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
@@ -29,8 +29,9 @@ urlpatterns = [
                url(r'^profile/$', core_views.view_profile, name='view_profile'),
 #               url(r'^profile/(?P<pk>\d+)/$', core_views.view_profile, name='view_profile_with_pk'),
                url(r'^profile/edit/$', core_views.edit_profile, name='edit_profile'),
-               url(r'^schedule/$',auth_views.logout,{'template_name': 'schedule.html'}, name='schedule'),
-               url(r'^report/$',auth_views.logout,{'template_name': 'report.html'}, name='report'),
+               url(r'^schedule/$',auth_views.login,{'template_name': 'schedule.html'}, name='schedule'),
+               url(r'^report/$',auth_views.login,{'template_name': 'report.html'}, name='report'),
 #               url(r'^login_success/$', core_views.login_success, name='login_success'),
-#               url(r'^admin/', admin.site.urls),
+               url(r'^admin/', admin.site.urls),
+               url(r'^$', RedirectView.as_view(url='admin/'))
 ]
