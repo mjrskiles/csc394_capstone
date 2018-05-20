@@ -20,6 +20,9 @@ from django.views.generic.base import TemplateView
 from dpwebsite.core import views as core_views
 from django.views.generic.base import RedirectView
 
+#admin_url = 'login/?next=/admin/'
+#/admin/login/?next=/admin/
+
 
 urlpatterns = [
                url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
@@ -33,5 +36,5 @@ urlpatterns = [
                url(r'^report/$',auth_views.login,{'template_name': 'report.html'}, name='report'),
 #               url(r'^login_success/$', core_views.login_success, name='login_success'),
                url(r'^admin/', admin.site.urls),
-               url(r'^$', RedirectView.as_view(url='admin/'))
+            
 ]

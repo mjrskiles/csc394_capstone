@@ -26,7 +26,6 @@ class Profile(models.Model):
     #userName = models.CharField(max_length=50)
     #userPassword = models.CharField(max_length=50)
 
-#    courses = models.CharField(max_length=200, default=' ')
     userFirstName = models.CharField(max_length=50, default='')
     userLastName = models.CharField(max_length=50, default='')
 
