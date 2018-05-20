@@ -54,9 +54,9 @@ class Users(models.Model):
 class Courses(models.Model):
     CRSE_ID = models.IntegerField()
     CRSE_TITLE = models.CharField(max_length=25)
-    CRSE_DESCRIPTION = models.CharField(max_length=250)
+    CRSE_DESCRIPTION = models.TextField()
     CRSE_SUBJECT = models.CharField(max_length=50)
-    CRSE_PREREQUISITE = models.CharField(max_length=250)
+    CRSE_PREREQUISITE = models.TextField()
     CRSE_NBR = models.IntegerField()
 
 
