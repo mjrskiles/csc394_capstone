@@ -20,21 +20,22 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    userEmail = models.CharField(max_length=50)
+#    userEmail = models.CharField(max_length=50)
 
     #userID = models.CharField(max_length=50)
     #userName = models.CharField(max_length=50)
     #userPassword = models.CharField(max_length=50)
 
-    userFirstName = models.CharField(max_length=50, default='')
+#    userFirstName = models.CharField(max_length=50, default='')
     userLastName = models.CharField(max_length=50, default='')
+#    courses = models.CharField(max_length=50, default='')
 
     def __str__(self):
         return self.user.username
 
 def create_user_profile(sender, **kwargs):
     if kwargs['created']:
-        create_user_profile = Profile.objects.create(user=kwargs['instance'])
+        user_profile = Profile.objects.create(user=kwargs['instance'])
 
 post_save.connect(create_user_profile, sender=User)
 

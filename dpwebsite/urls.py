@@ -34,6 +34,8 @@ urlpatterns = [
                url(r'^profile/edit/$', core_views.edit_profile, name='edit_profile'),
                url(r'^schedule/$',auth_views.login,{'template_name': 'schedule.html'}, name='schedule'),
                url(r'^report/$',auth_views.login,{'template_name': 'report.html'}, name='report'),
+               url(r'^report2/$',auth_views.login,{'template_name': 'report2.html'}, name='report2'),
+               
 #               url(r'^login_success/$', core_views.login_success, name='login_success'),
                url(r'^admin/', admin.site.urls),
             
