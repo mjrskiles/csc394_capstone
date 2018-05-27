@@ -46,3 +46,8 @@ def edit_profile(request):
         
         return render(request, 'edit_profile.html', args)
 
+def login_success(request):
+	if request.user.groups.filter(name="admins").exists():
+		return redirect(reverse('admin'))
+	else:
+		return redirect(reverse('home'))

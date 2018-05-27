@@ -51,6 +51,7 @@ class CourseNode(Node):
         regex = '[A-Za-z]+ [0-9]+'
         matcher = re.compile(regex)
         self.relationships = matcher.findall(rules)
+        print('{} relationships: {}'.format(self.course, self.relationships))
 
     def __str__(self):
         return str(self.course)
@@ -62,27 +63,29 @@ class PathFinder:
     def __init__(self):
         self.addedToGraph = {}
         self.courseList = []
+        self.root = Node()
 
-    def build_graph(self):
+    def build_course_list(self):
         table = Courses.objects.all()
-        root = Node()
 
         for c in table:
             courseName = '{} {}'.format(c.CRSE_SUBJECT, c.CRSE_NBR).strip(whitespace)
             prereqStr = c.CRSE_PREREQUISITE
             course = CourseNode(courseName, prereqStr)
             self.courseList.append(course)
-        
+
+    def build_graph(self):
+        self.build_course_list()
+
         while len(self.courseList) > 0:
             c = self.courseList.pop()
-            self.insert(c, root)
+            self.insert(c, self.root)
 
-        return root
 
     def insert(self, node, root):
         if len(node.relationships) == 0:
             root.addChild(node)
-            print('Added {} as child of root'.format(node))
+            print('Added {} as child of root (1)'.format(node))
             self.addedToGraph[node.course] = node
             return
         
@@ -91,20 +94,25 @@ class PathFinder:
                 if relation in self.addedToGraph:
                     prereq = self.addedToGraph[relation]
                     prereq.addChild(node)
-                    print('Added {} as child of {}'.format(node, prereq))
+                    self.addedToGraph[node.course] = node
+                    print('Added {} as child of {} (2)'.format(node, prereq))
 
                 else:
-                    prereq = None
-                    i = 0
-                    while i < len(self.courseList):
-                        if self.courseList[i].course == relation:
-                            prereq = self.courseList.pop(i)
-                        i += 1
+                    prereq = self.popNodeWithName(relation)
+                            
                     if prereq:
                         prereq.addChild(node)
-                        print('Added {} as child of {}'.format(node, prereq))
+                        self.addedToGraph[node.course] = node
+                        print('Added {} as child of {} (3)'.format(node, prereq))
                         self.insert(prereq, root)
-
+                    else:
+                        print("Couldn't pop the node for {}".format(relation))
+                        
+    def popNodeWithName(self, name):
+        for i in range(len(self.courseList)):
+            if self.courseList[i].course.strip(whitespace) in name.strip(whitespace):
+                return self.courseList.pop(i)
+        return None
 
 
     def find_shortest_path(self):
