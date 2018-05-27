@@ -17,18 +17,22 @@ from django.dispatch import receiver
 #    instance.profile.save()
 ##############################
 
+class ProfileManager(models.Manager):
+    def get_queryset(self):
+        return super(ProfileManager, self).get_queryset()
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    
 #    userEmail = models.CharField(max_length=50)
 
     #userID = models.CharField(max_length=50)
-    #userName = models.CharField(max_length=50)
-    #userPassword = models.CharField(max_length=50)
-
+#    userName = models.CharField(max_length=50)
+#    userPassword = models.CharField(max_length=50)
+#
 #    userFirstName = models.CharField(max_length=50, default='')
-    userLastName = models.CharField(max_length=50, default='')
-#    courses = models.CharField(max_length=50, default='')
+#    userLastName = models.CharField(max_length=50, default='')
+#    courses_taken = models.CharField(max_length=50)
 
     def __str__(self):
         return self.user.username

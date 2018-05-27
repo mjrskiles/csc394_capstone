@@ -38,12 +38,8 @@ def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
         if form.is_valid():
-#            user =
-
             form.save()
-#            user.profile.userLastName = form.cleaned_data.get('userLastName')
-#            user.save()
-            return redirect(('view_profile'))
+            return redirect(reverse('view_profile'))
     else:
         form = EditProfileForm(instance=request.user)
         args = {'form': form}
