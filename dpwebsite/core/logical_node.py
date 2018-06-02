@@ -48,7 +48,7 @@ class And(OperationNode):
     def truthValue(self, truth_list):
         # All children must be true for an AND to be true
         for c in self.children:
-            if c.truthValue(truth_list) == False:
+            if not c.truthValue(truth_list):
                 return False
         return True
 
@@ -62,7 +62,7 @@ class Or(OperationNode):
     def truthValue(self, truth_list):
         # Only one child has to be true in an OR node
         for c in self.children:
-            if c.truthValue(truth_list) == True:
+            if c.truthValue(truth_list):
                 return True
         return False
 

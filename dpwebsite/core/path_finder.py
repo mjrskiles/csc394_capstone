@@ -166,7 +166,9 @@ class PathFinder:
         taken_so_far = []
 
         # What if all of a courses prereqs aren't in the list? push them to the end of the list?
+        loop_count = 0
         while not grad_rule.truthValue(taken_so_far):
+            # print("Determined graduation requirements to not be met.")
             this_term = []
             i = 0
             # print("Terms so far:")
@@ -193,11 +195,17 @@ class PathFinder:
                 i += 1
                 # input("")
             
-            terms.append(this_term)
-            # print("Added term:")
-            for c in this_term:
-                taken_so_far.append(c.course)
-                # print('  ' + c.course)
+            if len(this_term):
+                terms.append(this_term)
+                # print("Added term:")
+                for c in this_term:
+                    taken_so_far.append(c.course)
+                    # print('  ' + c.course)
+
+            loop_count += 1
+            if loop_count > 100:
+                print("There was an error, got stuck in a loop.")
+                break
         
         return terms
 
@@ -255,8 +263,8 @@ class PathFinder:
             
 def test():
     for i in range(8):
-        if i == 3 or i == 6:
-            continue
+        # if i == 3 or i == 6:
+        #     continue
         print("\nFocus {} Shortest path is:".format(i))
         pf = PathFinder()
         plan = pf.find_shortest_path(grad.Major.CS, i, 2)
