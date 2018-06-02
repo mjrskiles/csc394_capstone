@@ -5,7 +5,8 @@
             
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 {% block head %}
-                <title>Welcome</title>
+                <title>Depaul Degree Progress
+                </title>
                 {% endblock %}
                 </head>
     <body>
@@ -32,7 +33,9 @@
                             <li><a href="{% url 'report' %}">Report</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
+                            <li><a>Welcome {{user.first_name}},</a></li>
                             <li><a href="{% url 'logout' %}">Log out</a></li>
+
                         </ul>
                         {% else %}
                         <ul class="nav navbar-nav">
@@ -47,7 +50,6 @@
             </nav>
         </div>
         {% block body %}
-        <h1>Home</h1>
         {% endblock %}
     </body>
     <script

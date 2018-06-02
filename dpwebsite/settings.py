@@ -144,5 +144,5 @@ LOGOUT_URL = 'logout'
 SCHEDULE_URL = 'schedule'
 REPORT_URL = 'report'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'login_success'
 

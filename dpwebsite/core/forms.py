@@ -2,10 +2,12 @@ from django import forms
 from django.contrib.auth.forms import (UserCreationForm, UserChangeForm)
 from django.contrib.auth.models import User
 
-from dpwebsite.core.models import Profile, Courses
+from dpwebsite.core.models import Profile
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
+   
+
 
 
     class Meta:
@@ -22,7 +24,7 @@ class RegistrationForm(UserCreationForm):
         
         if commit:
             user.save()
-        
+
         return user
 
 
@@ -31,12 +33,15 @@ class RegistrationForm(UserCreationForm):
 class EditProfileForm(UserChangeForm):
     template_name='/something/else'
 #    userLastName = forms.CharField(required=False)
-    CRSE_TITLE = forms.CharField(required=False)
+    courses_taken = forms.CharField(required=False)
+#    email = forms.EmailField(required=True)
+#    first_name = forms.CharField()
+#    last_name = forms.CharField()
 
 
     class Meta:
         model = User
-        fields = ('email','first_name','last_name', 'CRSE_TITLE', 'password')
+        fields = ('email','first_name','last_name','courses_taken', 'password')
             
 
 
