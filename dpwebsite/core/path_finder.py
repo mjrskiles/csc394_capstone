@@ -19,19 +19,10 @@ returns ['SE 450', '(CSC 301 or SE 430)']
 from django.db import models
 from dpwebsite.core.models import Courses
 import dpwebsite.core.logical_node as node
+import dpwebsite.core.rule_parser as rp
 import re
 
 whitespace = ' \t\n\r'
-
-"""
-A Requirement represents a prerequisite rule for a single course
-"""
-class Requirement:
-    def __init__(self, prerequisites):
-        self.prerequisites = self.parse_rules(prerequisites)
-
-    def parse_rules(self, prerequisites):
-        return []
 
 class Node:
     def __init__(self):
@@ -124,4 +115,19 @@ class PathFinder:
         for course in table:
             print('{:3}. Course: {:3} {:3} Prereq: {}'.format(i, course.CRSE_SUBJECT, course.CRSE_NBR, course.CRSE_PREREQUISITE))
             i += 1
+
+    def print_graph(self):
+        self.rprint_graph(self.root, 0)
+
+    def rprint_graph(self, root, level):
+        for child in root.children:
+            # Indent properly
+            if level > 0:
+                for i in range(level - 1):
+                    print('| ', end='')
+                print('`-', end='')
+            print(child.course)
+            self.rprint_graph(child, level + 1)
+            
+
 
