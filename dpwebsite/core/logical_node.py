@@ -82,36 +82,48 @@ class CourseLeaf(Node):
             return False
 
 class MinimumLeaf(Node):
-    def __init__(self, min):
+    def __init__(self, minimum):
         super().__init__()
-        self.min = min # min is an Int
+        self.minimum = minimum # minimum is an Int
         self.children = []
 
     def __str__(self):
-        return "Minimum {} classes".format(self.min)
+        return "Minimum {} classes".format(self.minimum)
 
     def truthValue(self, truth_list):
-        if min > len(truth_list):
+        # print(minimum)
+        if self.minimum > len(truth_list):
             return False
         else:
             return True
 
 class MinimumSetLeaf(Node):
-    def __init__(self, min, course_list):
+    def __init__(self, minimum, course_list):
         super().__init__()
-        self.min = min # min is an Int
+        self.minimum = minimum # minimum is an Int
         self.course_list = course_list
         self.children = []
 
     def __str__(self):
-        return "Minimum {} of {}".format(self.min, self.course_list)
+        return "Minimum {} of {}".format(self.minimum, self.course_list)
 
     def truthValue(self, truth_list):
         num_fullfilled = 0
         for c in self.course_list:
             if c in truth_list:
                 num_fullfilled += 1
-            if num_fullfilled >= self.min:
+            if num_fullfilled >= self.minimum:
                 return True
 
         return False
+
+class NoRequirement(Node):
+    def __init__(self):
+        super().__init__()
+        self.children = []
+
+    def __str__(self):
+        return 'No Requirement'
+
+    def truthValue(self, truth_list):
+        return True
