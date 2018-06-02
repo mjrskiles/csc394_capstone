@@ -27,6 +27,7 @@ whitespace = ' \t\n\r'
 class Node:
     def __init__(self):
         self.children = []
+        self.level = 0
 
     def addChild(self, child):
         self.children.append(child)
