@@ -6,8 +6,10 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <form method="post">
+    <h2 style="text-align: center;">Welcome to the Profile Editor!</h2>
+    <br>
+<div class="container" style="padding-left: 10%">
+    <form method="post" >
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Submit</button>

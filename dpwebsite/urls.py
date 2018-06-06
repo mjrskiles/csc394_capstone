@@ -19,27 +19,34 @@ from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
 from dpwebsite.core import views as core_views
 from django.views.generic.base import RedirectView
+from dpwebsite.core import views
 
 #admin_url = 'login/?next=/admin/'
 #/admin/login/?next=/admin/
 
+ADMIN_URL = 'https://docs.djangoproject.com/en/dev/ref/contrib/admin/'
 
 urlpatterns = [
-               url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
-               url(r'^login/$', auth_views.login,{'template_name': 'login.html'}, name='login'),
-               url(r'^logout/$', auth_views.logout, {'template_name': 'logged_out.html'}, name='logout'),
-               url(r'^signup/$', core_views.signup, name='signup'),
-               url(r'^profile/$', core_views.view_profile, name='view_profile'),
-               url(r'^profile/(?P<pk>\d+)/$', core_views.view_profile, name='view_profile_with_pk'),
-#              url(r'^profile/(?P<pk>\d+)/$', core_views.view_profile, name='view_profile_with_pk'),
-               url(r'^profile/edit/$', core_views.edit_profile, name='edit_profile'),
-               url(r'^schedule/$',auth_views.login,{'template_name': 'schedule.html'}, name='schedule'),
-               url(r'^report/$',auth_views.login,{'template_name': 'report.html'}, name='report'),
-               url(r'^report2/$',auth_views.login,{'template_name': 'report2.html'}, name='report2'),
-               
-#              url(r'^login_success/$', core_views.login_success, name='login_success'),
-		url(r'^login_success/$',core_views.login_success),
-               url(r'^admin/', admin.site.urls),
+    url(r'^$', auth_views.login, {'template_name': 'login.html'}, name='main'),
+    url(r'^home/$', TemplateView.as_view(template_name='home.html'), name='home'),
+    url(r'^faculty/$', TemplateView.as_view(template_name='facultyPage.html'), name='faculty'),
+    url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
+    url(r'^logout/$', auth_views.logout, {'template_name': 'logged_out.html'}, name='logout'),
+    url(r'^signup/$', core_views.signup, name='signup'),
+    url(r'^profile/$', core_views.view_profile, name='view_profile'),
+    url(r'^profile/(?P<pk>\d+)/$', core_views.view_profile, name='view_profile_with_pk'),
+    #           url(r'^profile/(?P<pk>\d+)/$', core_views.view_profile, name='view_profile_with_pk'),
+    url(r'^profile/edit/$', core_views.edit_profile, name='edit_profile'),
+    url(r'^schedule/$', auth_views.login, {'template_name': 'schedule.html'}, name='schedule'),
+    url(r'^report/$', views.report, name='report'),
+    url(r'^report2/$', auth_views.login, {'template_name': 'report2.html'}, name='report2'),
+
+    # url(r'^login_success/$', core_views.login_success, name='login_success'),
+    url(r'^login_success/$', core_views.login_success, name='login_success'),
+    url(r'^admin/', admin.site.urls),
+    url('^admin/$', RedirectView.as_view(url=ADMIN_URL), name='ADMIN_URL'),
+    url(r'^profile/password/$', core_views.change_password, name='change_password'),
+    url(r'^savedpaths/$', views.get_saved_paths, name="saved_paths")
 
             
 ]

@@ -24,26 +24,39 @@
                         <a class="navbar-brand" href="/">DePaul Degree Progress</a>
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
-                        {% if user.is_authenticated %}
-                        <ul class="nav navbar-nav">
-                            <li><a href="{% url 'home' %}">Home</a></li>
-                            <li><a href="{% url 'view_profile' %}">Profile</a></li>
-                            <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
-                            <li><a href="{% url 'schedule' %}">Schedule</a></li>
-                            <li><a href="{% url 'report' %}">Report</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a>Welcome {{user.first_name}},</a></li>
-                            <li><a href="{% url 'logout' %}">Log out</a></li>
+                        {% if user.is_authenticated and user.is_staff%}
+                            <ul class="nav navbar-nav">
+                                <li><a href="{% url 'home' %}">Home</a></li>
+                                <li><a href="{% url 'view_profile' %}">Profile</a></li>
+                                <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+                                <li><a href="{% url 'faculty' %}">Faculty</a></li>
+                                <li><a href="{% url 'saved_paths' %}">Saved Paths</a></li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a>Welcome {{user.first_name}},</a></li>
+                                <li><a href="{% url 'logout' %}">Log out</a></li>
 
-                        </ul>
+                            </ul>
+                        {%  elif user.is_authenticated %}
+                            <ul class="nav navbar-nav">
+                                <li><a href="{% url 'home' %}">Home</a></li>
+                                <li><a href="{% url 'view_profile' %}">Profile</a></li>
+                                <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+                                <li><a href="{% url 'report' %}">Report</a></li>\
+                                <li><a href="{% url 'saved_paths' %}">Saved Paths</a></li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a>Welcome {{user.first_name}},</a></li>
+                                <li><a href="{% url 'logout' %}">Log out</a></li>
+
+                            </ul>
                         {% else %}
-                        <ul class="nav navbar-nav">
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="{% url 'login' %}">Login</a></li>
-                            <li><a href="{% url 'signup' %}">Sign up</a></li>
-                        </ul>
+                            <ul class="nav navbar-nav">
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="{% url 'login' %}">Login</a></li>
+                                <li><a href="{% url 'signup' %}">Sign up</a></li>
+                            </ul>
                         {% endif %}
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
