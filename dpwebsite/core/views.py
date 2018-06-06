@@ -72,8 +72,6 @@ def login_success(request):
     print(isStaff)
     if isSuper:
         return redirect(reverse('ADMIN_URL'))
-    elif isStaff:
-        return redirect(reverse('faculty'))
     else:
         return redirect(reverse('home'))
 
@@ -211,8 +209,17 @@ def class_search(request):
 
 
 def faculty_page(request):
-    AUG = AuthUserGroups.objects.filter(user= request.user.id)
-    print(AUG)
-    form=[]
+    AUG = AuthUserGroups.objects.filter(user= request.user.id).values()
+    myid = 0
+    myStudents = []
+    for item in AUG:
+        myid= int(item['id'])
 
-    render(request,'facultyPage.html',{'form': form})
+    AUG2 = AuthUserGroups.objects.values()
+    for items in AUG2:
+        if int(items['id']) == myid:
+            if int(items['user_id']) != request.user.id:
+                myStudents.append(int(items['user_id']))
+    formset = CorePath.objects.filter(user_id=myStudents[0]).values_list('path_id', flat=True).distinct()
+
+    return render(request,'facultyPage.html',{'students': myStudents,'paths': formset })

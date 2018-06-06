@@ -57,14 +57,13 @@ class AuthUser(models.Model):
 
 
 class AuthUserGroups(models.Model):
+    id = models.IntegerField
     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+    group_id = models.IntegerField
 
     class Meta:
         managed = False
         db_table = 'auth_user_groups'
-        unique_together = (('user', 'group'),)
-
 
 class AuthUserUserPermissions(models.Model):
     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
