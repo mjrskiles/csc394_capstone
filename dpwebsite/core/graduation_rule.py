@@ -210,6 +210,90 @@ thesis_opts = [
     'CSC 697'
 ]
 
+####################
+# IS requirements  #
+####################
+
+is_foundation = 'IS 421 and CSC 451 and IS 422 and IS 430 and IS 577'
+
+# Every IS concentration has slightly different Advanced requirements
+is_ba_adv = 'CNS 440 and IS 435 and IS 485 and IS 535 and IS 560'
+is_bi_adv = 'IS 574 and CSC 423 and IS 549 and (IT 411 or CSC 401) and IT 403'
+is_dba_adv = 'IS 549 and CSC 454 and CSC 452 and CSC 554 and (IT 411 or CSC 401)'
+is_ent_adv = 'ECT 424 and IS 556 and IS 570 and IS 535'
+is_standard_adv = ''
+
+# Business Analysis - take 2
+bus_analysis = [
+    'ECT 424',
+    'IS 444',
+    'ECT 480',
+    'IS 483',
+    'HCI 440',
+    'IS 431',
+    'IS 440',
+    'IS 455',
+    'IS 540',
+    'IS 556',
+    'IS 565',
+    'IS 578'
+]
+
+# take 3
+bus_intel = [
+    'CSC 424',
+    'CSC 465',
+    'CSC 495',
+    'CSC 575',
+    'GEO 441',
+    'HCI 512',
+    'ECT 584',
+    'IPD 447',
+    'IPD 451',
+    'IPD 460',
+    'IS 452',
+    'IS 456',
+    'IS 536',
+    'IS 550'
+]
+
+# take 3
+db_admin = [
+    'CNS 440',
+    'IPD 447',
+    'IPD 451',
+    'IPD 460',
+    'IPD 463',
+    'IS 452',
+    'IS 505',
+    'IS 536',
+    'IS 550'
+]
+
+# take 3
+it_enterprise = [
+    'CNS 440',
+    'ECT 556',
+    'IS 440',
+    'IS 444',
+    'IS 482',
+    'IS 483',
+    'IS 500',
+    'IS 505',
+    'IS 506',
+    'IS 535',
+    'IS 536',
+    'IS 540',
+    'IS 550',
+    'IS 560',
+    'IS 565',
+    'IS 579',
+    'IS 580'
+]
+
+# standard focus just takes 7 from the other focus lists.
+standard = []
+
 # Graduation requirements for a masters in CS:
 #   Take all introductory and foundation courses (or equivalent credit already completed)
 #   For a given focus:
@@ -236,22 +320,34 @@ class CSFocus():
     HCI = 7
 
 class ISFocus():
-    FOCUS1 = 0
+    BUSINESS_ANALYSIS = 0
+    BUSINESS_INTEL = 1
+    DB_ADMIN = 2
+    IT_ENTERPRISE = 3
+    STANDARD = 4
 
 cs_focuses = [sw_sys_dev, theory, data_science, db_systems, ai, se, game_rt_sys, hci]
 
-is_focuses = []
+is_focuses = [bus_analysis, bus_intel, db_admin, it_enterprise, standard]
 
 major_focus_lists = [cs_focuses, is_focuses]
 
 cs_base = cs_introductory + ' and ' + cs_foundation
 
-is_base = []
+is_base = is_foundation
+
+is_adv = [is_ba_adv, is_bi_adv, is_dba_adv, is_ent_adv, is_standard_adv]
 
 major_base_courses = [cs_base, is_base]
 
+def build_rule(major, focus_index):
+    if major == Major.CS:
+        return cs_build_rule(focus_index)
+    elif major == Major.IS:
+        return is_build_rule(focus_index)
+
 # focus is a value from CSFocus
-def build_rule(focus_index):
+def cs_build_rule(focus_index):
     try:
         int(focus_index)
     except ValueError:
@@ -290,3 +386,42 @@ def build_rule(focus_index):
     # print(grad_rule)
 
     return rp.parse(grad_rule)
+
+def is_build_rule(focus_index):
+    try:
+        int(focus_index)
+    except ValueError:
+        print("graduation.build_rule: focus wasn't an int")
+    
+    grad_rule = is_base
+
+    if focus_index != ISFocus.STANDARD:
+        grad_rule += ' and ' + is_adv[focus_index]
+
+    elective_amount = 0
+    if focus_index == ISFocus.BUSINESS_ANALYSIS:
+        elective_amount = 3
+    elif focus_index == ISFocus.STANDARD:
+        elective_amount = 8
+    else:
+        elective_amount = 4
+
+    grad_rule += ' and ~{}('.format(elective_amount)
+
+    for i in range(len(is_focuses)):
+        if i != focus_index:
+            for course in is_focuses[i]:
+                grad_rule += course + ','
+    
+    grad_rule += ')'
+
+    # total courses req
+    grad_rule += ' and ~13'
+
+    # print(grad_rule)
+
+    return rp.parse(grad_rule)
+
+    
+
+    

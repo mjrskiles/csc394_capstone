@@ -121,7 +121,7 @@ class PathFinder:
     def find_shortest_path(self, major_index, focus_index, courses_per_term):
         self.build_graph()
         self.assign_node_depths()
-        grad_rule = grad.build_rule(focus_index)
+        grad_rule = grad.build_rule(major_index, focus_index)
 
         # find courses with least requirements
         focus_lists = grad.major_focus_lists[major_index]
@@ -265,9 +265,19 @@ def test():
     for i in range(8):
         # if i == 3 or i == 6:
         #     continue
-        print("\nFocus {} Shortest path is:".format(i))
+        print("\nCS Focus {} Shortest path is:".format(i))
         pf = PathFinder()
-        plan = pf.find_shortest_path(grad.Major.CS, i, 2)
+        plan = pf.find_shortest_path(grad.Major.CS, i, 3)
+        
+        for i in range(len(plan)):
+            print("Term {}".format(i + 1))
+            for c in plan[i]:
+                print('  ' + c.course)
+
+    for i in range(5):
+        print("\nIS Focus {} Shortest path is:".format(i))
+        pf = PathFinder()
+        plan = pf.find_shortest_path(grad.Major.IS, i, 3)
         
         for i in range(len(plan)):
             print("Term {}".format(i + 1))
