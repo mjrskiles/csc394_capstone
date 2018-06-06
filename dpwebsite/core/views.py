@@ -16,7 +16,11 @@ from dpwebsite.core.path_finder import PathFinder
 from .forms import ReportForm
 from .forms import SavedPathForm
 from dpwebsite.core.models import CorePath
+from dpwebsite.core.models import CoreCourses
 from django.utils.crypto import get_random_string
+from collections import defaultdict
+from .forms import ClassSearchForm
+from dpwebsite.core.models import AuthUserGroups
 
 
 
@@ -128,14 +132,87 @@ def report(request):
 
 
 def get_saved_paths(request):
-        print("Test")
-        request.GET.get
-        if (request.GET.get('delete_path')):
-            print("delete")
-        elif (request.GET.get('view_path')):
-            print("view")
+        if (request.POST.get('delete_path')):
+            CorePath.objects.filter(path_id=request.POST.get('delete_path')).delete()
+            formset = CorePath.objects.filter(user_id=request.user.id).values_list('path_id', flat=True).distinct()
+            return render(request, 'saved_paths_page.html', {'formset': formset})
+        elif (request.POST.get('view_path')):
+            request.session['curPathID'] = request.POST.get('view_path')
+            return redirect(reverse('single_path'))
         else:
             formset = CorePath.objects.filter(user_id=request.user.id).values_list('path_id', flat=True).distinct()
             return render(request, 'saved_paths_page.html', {'formset': formset})
-        return render(request, 'saved_paths_page.html')
 
+
+def single_path(request):
+    if request.POST.get('returnFromPath'):
+        return redirect(reverse('saved_paths'))
+    else:
+        pathID = request.session['curPathID']
+        myPath = CorePath.objects.filter(path_id=pathID).order_by('pathsteps')
+        myList = []
+        curList = []
+        lastPathQuarter = 0
+        curTerm = 1
+        for item in myPath:
+            curCourse = CoreCourses.objects.filter(id=item.courseid)[0]
+            if lastPathQuarter == item.pathquarter:
+                curList.append((curCourse.CRSE_SUBJECT +" "+str(curCourse.CRSE_NBR)))
+            else:
+                myList.append(curList)
+                curList = []
+                curList.append((curCourse.CRSE_SUBJECT +" "+str(curCourse.CRSE_NBR)))
+            lastPathQuarter = item.pathquarter
+        return render(request,'single_path.html', {'form': myList})
+
+
+def class_search(request):
+    toReturn = []
+    print("Wee")
+    if request.POST.get('classSearch'):
+        searchChoice = int(request.POST.get('select_search_choice'))
+        searchText = request.POST.get('search_text')
+        print(searchChoice)
+        print(type(searchChoice))
+        print(type(searchText))
+        if searchChoice == 0:
+            #id
+            returned = CoreCourses.objects.filter(id = int(searchText))
+            for item in returned:
+                toReturn.append(item)
+        elif searchChoice == 1:
+            #title
+            returned = CoreCourses.objects.filter(CRSE_TITLE = searchText)
+            for item in returned:
+                toReturn.append(item)
+        elif searchChoice == 2:
+            #description
+            returned = CoreCourses.objects.filter(CRSE_DESCRIPTION = searchText)
+            for item in returned:
+                toReturn.append(item)
+        elif searchChoice == 3:
+            #subject
+            returned = CoreCourses.objects.filter(CRSE_SUBJECT = searchText)
+            for item in returned:
+                toReturn.append(item)
+        elif searchChoice == 4:
+            #course number
+            returned = CoreCourses.objects.filter(CRSE_NBR = int(searchText))
+            for item in returned:
+                toReturn.append(item)
+    print(toReturn)
+    if request.method == 'POST':
+        form = ClassSearchForm(request.POST)
+        if form.is_valid():
+            pass
+    else:
+        form = ClassSearchForm()
+    return render(request,'class_search.html', { 'form': form, 'classes': toReturn})
+
+
+def faculty_page(request):
+    AUG = AuthUserGroups.objects.filter(user= request.user.id)
+    print(AUG)
+    form=[]
+
+    render(request,'facultyPage.html',{'form': form})

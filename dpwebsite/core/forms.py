@@ -32,7 +32,9 @@ class ReportForm(forms.Form):
     concentrationChoices = ((0, 'CS - Software and System Dev'), (1, 'CS - Theory'), (2, 'CS - Data Science'),
                             (3, 'CS - Database Systems'), (4, 'CS - Artificial Intelligence'),
                             (5, 'CS - Software Engineering'), (6, 'CS - Game - Real Time'),
-                            (7, 'CS - Human - Computer Interaction'))
+                            (7, 'CS - Human - Computer Interaction'), (0, 'IS - Business Analysis'),
+                            (1, 'IS - Business Intel'), (2, 'IS- DB Admin'),
+                            (3, 'IS - IT Enterprise'), (4, 'IS - Standard'))
     numOfCoursesTakenChoices = ((1, '1'), (2, '2'), (3, '3'))
 
     select_major_ = forms.ChoiceField(choices=majorChoices)
@@ -42,6 +44,14 @@ class ReportForm(forms.Form):
 
 class SavedPathForm(forms.Form):
     path_id = forms.CharField(max_length=20)
+
+class ClassSearchForm(forms.Form):
+    #id, title, description, subject, number
+    searchChoices = ((0, 'Course ID'), (1, 'Course Title'), (2, 'Course Description'),
+                     (3, 'Course Subject'), (4, 'Course Number'))
+    search_text = forms.CharField(max_length=50)
+    select_search_choice = forms.ChoiceField(choices=searchChoices)
+
 
 
 

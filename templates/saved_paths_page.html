@@ -12,9 +12,9 @@
         {% csrf_token %}
         <table>
             {% for form in formset %}
-            <p>Path ID: {{ form }} <button name="delete_path" style="float: right" type="submit">Delete Path</button><button name="view_path" style="float: right;" type="submit">View Path</button></p>
-            <br>
-        {% endfor %}
+                <p>Path ID: {{ form }} <button name="delete_path" style="float: right" type="submit" value="{{form}}">Delete Path</button><button name="view_path" style="float: right;" type="submit" value="{{form}}">View Path</button></p>
+                <br>
+            {% endfor %}
         </table>
 </form>
 </div>
