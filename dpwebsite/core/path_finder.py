@@ -56,6 +56,7 @@ class CourseNode(Node):
 class PathFinder:
     def __init__(self):
         self.added_to_graph = {}
+        self.course_titles = {}
         self.course_list = []
         self.root = Node()
 
@@ -65,6 +66,8 @@ class PathFinder:
         for c in table:
             courseName = '{} {}'.format(c.CRSE_SUBJECT, c.CRSE_NBR).strip(whitespace)
             prereqStr = c.CRSE_PREREQUISITE
+            courseTitle = c.CRSE_TITLE
+            self.course_titles[courseName] = courseTitle
             course = CourseNode(courseName, prereqStr,c.id)
             self.course_list.append(course)
 
@@ -75,6 +78,8 @@ class PathFinder:
             c = self.course_list.pop()
             self.insert(c, self.root)
 
+    def get_course_titles(self):
+        return self.course_titles
 
     def insert(self, node, root):
         if len(node.relationships) == 0:
