@@ -1,80 +1,53 @@
 {% extends 'base.html' %}
 
-
 {% block head %}
 <title>Report</title>
 {% endblock %}
 
+<div class="container" style="overflow:hidden;">
 {% block body %}
-<div class="container">
-    <h1>Report</h1>
-    <div class="form-group">
-        <label for="exampleFormControlSelect1">Select Major</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-            <option> </option>
-            <option>CS</option>
-            <option>IS</option>
-            <option>other</option>
-        </select>
-    </div>
-    
-    <div class="form-group">
-        <label for="exampleFormControlSelect1">Select Start Quarter</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-            <option> </option>
-            <option>Fall</option>
-            <option>Winter</option>
-            <option>Spring</option>
-            <option>Summer</option>
-        </select>
-    </div>
-    
-    <div class="form-group">
-        <label for="exampleFormControlSelect1">Select Degree</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-            <option> </option>
-            <option>CS</option>
-            <option>IS</option>
-        </select>
-    </div>
-    
-    <div class="form-group">
-        <label for="exampleFormControlSelect1">Select Concentration</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-            <option> </option>
-            <option>CS - Software and System Dev</option>
-            <option>CS - Theory</option>
-            <option>CS - Data Science</option>
-            <option>CS - Database Systems</option>
-            <option>CS - Artificial Inteligence</option>
-            <option>CS - Software Engineering </option>
-            <option>CS - Game - Real Time Systems</option>
-            <option>CS - Human - Computer Interaction</option>
-            <option>IS - Business Analysis</option>
-            <option>IS - System Analysis</option>
-            <option>IS - Business Intelligence</option>
-            <option>IS - Database Administration</option>
-            <option>IS - IT Enterprise Management</option>
-            <option>IS - Standard</option>
-        </select>
-    </div>
-    
-    <div class="form-group">
-        <label for="exampleFormControlSelect1">Select Courses Per Quarter</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-            <option> </option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-        </select>
-    </div>
-    
-    
-    <li><a href="{% url 'report2' %}">What-if Report</a></li>
-    <button type="submit">Progress Report</button>
-
-    
-    
+<div class="container" style=" margin-left: 22%;float: left;width:400px; ">
+    <table>
+        <h1 >Report</h1>
+        <form method="POST" >
+            {% csrf_token %}
+            <table >
+                <p>Select Major: {{form.select_major_}} </p>
+                <p>Select Concentration: {{form.select_concentration_}} </p>
+                <p>Select Number of Class Per Term: {{form.select_number_of_courses_per_term_}} </p>
+            </table>
+            <button type="submit">Submit</button>
+        </form>
+    </table>
 </div>
 
+<div style="margin-right: 22%;float:right;width: 30%;text-align: center" class="container">
+    {% if formDatas != None %}
+        <table width="400" border="1" style="text-align: center">
+               <tr style="text-align: center">
+                   <th>Term</th>
+                   <th>Courses</th>
+               </tr>
+        {% for formData in formDatas %}
+            <tr>
+                <th>Term {{ forloop.counter }} {# starting index 1 #}</th>
+                <th>
+                {% for c in formData %}
+                    {{c.course}}<br>
+                {% endfor %}
+                </th>
+            </tr>
+        {% endfor %}
+        </table>
+    <br>
+    <form method="Post">
+        {% csrf_token %}
+        <button type="submit">Go back/Try Again</button>
+    </form>
+    {% endif %}
+
+</div>
+
+
 {% endblock %}
+</div>

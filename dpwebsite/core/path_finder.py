@@ -9,15 +9,13 @@ regexes:
 '(?<=\\)) or ' matches an 'or' only if preceded by )
 ' and (?=\\()'
 '(?<=\\)) and '
-
 These can be used to split strings by logical operations while keeping parentheses grouped.
-
 e.g. re.split(' or (?=\\()', 'SE 450 or (CSC 301 and SE 430)')
 returns ['SE 450', '(CSC 301 or SE 430)']
 """
 
 from django.db import models
-from dpwebsite.core.models import Courses
+from dpwebsite.core.models import CoreCourses as Courses
 import dpwebsite.core.logical_node as node
 import dpwebsite.core.rule_parser as rp
 import dpwebsite.core.graduation_rule as grad
@@ -34,8 +32,9 @@ class Node:
         self.children.append(child)
 
 class CourseNode(Node):
-    def __init__(self, course, rules):
+    def __init__(self, course, rules,id):
         super().__init__()
+        self.id = id
         self.parents = [] # CourseNode[]
         self.course = course
         self.prerequisite_rule = rp.RuleParser.parse(rules)
@@ -66,7 +65,7 @@ class PathFinder:
         for c in table:
             courseName = '{} {}'.format(c.CRSE_SUBJECT, c.CRSE_NBR).strip(whitespace)
             prereqStr = c.CRSE_PREREQUISITE
-            course = CourseNode(courseName, prereqStr)
+            course = CourseNode(courseName, prereqStr,c.id)
             self.course_list.append(course)
 
     def build_graph(self):
@@ -83,7 +82,7 @@ class PathFinder:
             # print('Added {} as child of root (1)'.format(node))
             self.added_to_graph[node.course] = node
             return
-        
+
         else:
             for relation in node.relationships:
                 if relation in self.added_to_graph:
@@ -94,7 +93,7 @@ class PathFinder:
 
                 else:
                     prereq = self.pop_node_with_name(relation)
-                            
+
                     if prereq:
                         prereq.add_child(node)
                         self.added_to_graph[node.course] = node
@@ -102,7 +101,7 @@ class PathFinder:
                         self.insert(prereq, root)
                     else:
                         print("Couldn't pop the node for {}".format(relation))
-                        
+
     def pop_node_with_name(self, name):
         for i in range(len(self.course_list)):
             if self.course_list[i].course.strip(whitespace) in name.strip(whitespace):
@@ -128,9 +127,9 @@ class PathFinder:
 
         # pick the 4 quickest for the selected focus
         chosen_focus_electives = self.pick_n_of_min_depth(4, focus_lists[focus_index])
-        print("Chosen focus elect. ")
-        for n in chosen_focus_electives:
-            print('  ' + n.course)
+        #print("Chosen focus elect. ")
+        #for n in chosen_focus_electives:
+         #   print('  ' + n.course)
 
         # choose 4 from the other advanced electives
         other_electives_list = []
@@ -139,14 +138,14 @@ class PathFinder:
                 other_electives_list.extend(focus_lists[i])
 
         chosen_outside_electives = self.pick_n_of_min_depth(4, other_electives_list)
-        print("Chosen other elect. ")
-        for n in chosen_outside_electives:
-            print('  ' + n.course )
+        #print("Chosen other elect. ")
+        #for n in chosen_outside_electives:
+         #   print('  ' + n.course )
 
         base_course_list = re.findall('[A-Z]+ [0-9]+', grad.major_base_courses[major_index], re.I)
-        print("Base courses:")
-        for c in base_course_list:
-            print('  ' + c)
+        #print("Base courses:")
+        #for c in base_course_list:
+         #   print('  ' + c)
 
         base_courses = []
         for c in base_course_list:
@@ -194,7 +193,7 @@ class PathFinder:
                                     all_req_courses.append(req)
                 i += 1
                 # input("")
-            
+
             if len(this_term):
                 terms.append(this_term)
                 # print("Added term:")
@@ -206,7 +205,7 @@ class PathFinder:
             if loop_count > 100:
                 print("There was an error, got stuck in a loop.")
                 break
-        
+
         return terms
 
 
@@ -230,7 +229,7 @@ class PathFinder:
                     chosen_electives[max_i] = node
                     max_i = self.index_of_largest_depth(chosen_electives)
         return chosen_electives
-                
+
 
     def index_of_largest_depth(self, l):
         largest = 0
@@ -260,7 +259,7 @@ class PathFinder:
                 print('`-', end='')
             print('{} - Depth {}'.format(child.course, child.depth))
             self.rprint_graph(child, level + 1)
-            
+
 def test():
     for i in range(8):
         # if i == 3 or i == 6:
@@ -283,5 +282,4 @@ def test():
             print("Term {}".format(i + 1))
             for c in plan[i]:
                 print('  ' + c.course)
-
 
