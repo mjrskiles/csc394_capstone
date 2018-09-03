@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Report</title>
+{% endblock %}
+
+<div class="container" style="overflow:hidden;">
+{% block body %}
+<div class="container" style=" margin-left: 12%;float: left;width:400px; ">
+    <table>
+        <h1 >Report</h1>
+        <form method="POST" >
+            {% csrf_token %}
+            <table >
+                <p>Select Major: {{form.select_major_}} </p>
+                <p>Select Concentration: {{form.select_concentration_}} </p>
+                <p>Select Number of Class Per Term: {{form.select_number_of_courses_per_term_}} </p>
+            </table>
+            <button type="submit">Submit</button>
+        </form>
+    </table>
+</div>
+
+<div style="margin-right: 12%;float:right;width: 30%;text-align: center" class="container">
+    {% if formDatas != None %}
+        <table width="400" border="1" style="text-align: center">
+               <tr style="text-align: center">
+                   <th>Term</th>
+                   <th>Courses</th>
+               </tr>
+        {% for formData in formDatas %}
+            <tr>
+                <th>Term {{ forloop.counter }} {# starting index 1 #}</th>
+                <th>
+                {% for c in formData %}
+                    {{c.course}}<br>
+                {% endfor %}
+                </th>
+            </tr>
+        {% endfor %}
+        </table>
+    <br>
+    <form method="Post">
+        {% csrf_token %}
+        <button type="submit">Go back/Try Again</button>
+    </form>
+    {% endif %}
+
+</div>
+
+
+{% endblock %}
+</div>

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Class Search</title>
+{% endblock %}
+
+{% block body %}
+    <h2 style="text-align: center;">Welcome to the Class Finder!</h2>
+    <br>
+<div class="container" style="padding-left: 10%">
+    <form method="post" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="classSearch" value = "1">Submit</button>
+    </form>
+    <br>
+</div>
+
+{% if classes != None %}
+<div>
+    <table class="container" width="1000" border="1" style="padding-left: 10px;text-align: center">
+               <tr style="text-align: center">
+                   <th>ID</th>
+                   <th>Title</th>
+                   <th>Description</th>
+                   <th>Subject</th>
+                   <th>Number</th>
+               </tr>
+        {% for class in classes %}
+            <tr>
+                <th>{{class.id}}</th>
+                <th>{{class.CRSE_TITLE}}</th>
+                <th>{{class.CRSE_DESCRIPTION}}</th>
+                <th>{{class.CRSE_SUBJECT}}</th>
+                <th>{{class.CRSE_NBR}}</th>
+            </tr>
+        {% endfor %}
+        </table>
+    <br>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+
+

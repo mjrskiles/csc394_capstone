@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>My Saved Paths</title>
+{% endblock %}
+
+{% block body %}
+    <h2 style="text-align: center;">Welcome to the Saved Paths Page!</h2>
+    <br>
+<div class="container" style="padding-left: 10%">
+    <form method="post" action="">
+        {% csrf_token %}
+        <table>
+            {% for form in formset %}
+                <p>Path ID: {{ form }} <button name="delete_path" style="float: right" type="submit" value="{{form}}">Delete Path</button><button name="view_path" style="float: right;" type="submit" value="{{form}}">View Path</button></p>
+                <br>
+            {% endfor %}
+        </table>
+</form>
+</div>
+
+{% endblock %}

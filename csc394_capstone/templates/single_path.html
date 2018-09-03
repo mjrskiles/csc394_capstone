@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>A Single Saved Path</title>
+{% endblock %}
+
+
+{% block body %}
+<div style="width: 30%;text-align: center" class="container">
+    {% if form != None %}
+        <table width="400" border="1" style="text-align: center">
+               <tr style="text-align: center">
+                   <th>Term</th>
+                   <th>Courses</th>
+               </tr>
+        {% for formData in form %}
+            <tr>
+                <th>Term {{ forloop.counter }} {# starting index 1 #}</th>
+                <th>
+                {% for c in formData %}
+                    {{c}}<br>
+                {% endfor %}
+                </th>
+            </tr>
+        {% endfor %}
+        </table>
+    <br>
+    <form method="Post">
+        {% csrf_token %}
+        <button style="width: 30%" name="returnFromPath" value="ok" type="submit">Go back</button>
+    </form>
+    {% endif %}
+
+</div>
+
+{% endblock %}
